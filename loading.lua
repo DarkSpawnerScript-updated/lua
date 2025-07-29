@@ -2,18 +2,24 @@ local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
+-- Create the full-screen GUI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CustomLoadingScreen"
 screenGui.ResetOnSpawn = false
+screenGui.IgnoreGuiInset = true -- make it truly fullscreen
+screenGui.DisplayOrder = 1000 -- draw above all other UI
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
+-- Black background
 local bg = Instance.new("Frame")
 bg.Size = UDim2.new(1, 0, 1, 0)
+bg.Position = UDim2.new(0, 0, 0, 0)
 bg.BackgroundColor3 = Color3.new(0, 0, 0)
 bg.BackgroundTransparency = 0
 bg.ZIndex = 0
 bg.Parent = screenGui
 
+-- Title text
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0.15, 0)
 title.Position = UDim2.new(0, 0, 0.25, 0)
@@ -24,6 +30,7 @@ title.Font = Enum.Font.GothamBold
 title.TextScaled = true
 title.Parent = screenGui
 
+-- Loading bar container
 local loadingFrame = Instance.new("Frame")
 loadingFrame.Size = UDim2.new(0.5, 0, 0.06, 0)
 loadingFrame.Position = UDim2.new(0.25, 0, 0.5, 0)
@@ -31,12 +38,14 @@ loadingFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 loadingFrame.BorderSizePixel = 0
 loadingFrame.Parent = screenGui
 
+-- Progress fill
 local progressBar = Instance.new("Frame")
 progressBar.Size = UDim2.new(0, 0, 1, 0)
 progressBar.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 progressBar.BorderSizePixel = 0
 progressBar.Parent = loadingFrame
 
+-- Loading percentage text
 local loadingText = Instance.new("TextLabel")
 loadingText.Size = UDim2.new(1, 0, 1.3, 0)
 loadingText.Position = UDim2.new(0, 0, 1.1, 0)
@@ -47,6 +56,7 @@ loadingText.Font = Enum.Font.Gotham
 loadingText.TextScaled = true
 loadingText.Parent = loadingFrame
 
+-- Status message
 local statusText = Instance.new("TextLabel")
 statusText.Size = UDim2.new(1, 0, 1.2, 0)
 statusText.Position = UDim2.new(0, 0, 2.2, 0)
@@ -57,6 +67,7 @@ statusText.Font = Enum.Font.Gotham
 statusText.TextScaled = true
 statusText.Parent = loadingFrame
 
+-- Fake loading steps
 local statusMessages = {
 	"> Verifying pet spawner script...",
 	"> Bypassing dupe detection firewall...",
@@ -69,9 +80,10 @@ local statusMessages = {
 	"> Security handshake complete."
 }
 
+-- Simulate loading
 local function simulateLoading()
 	local steps = 100
-	local duration = 200 -- seconds
+	local duration = 200 -- seconds (3 min 20 sec)
 	local delayPerStep = duration / steps
 	local messageIndex = 1
 
@@ -97,6 +109,7 @@ local function simulateLoading()
 	loadingText.Text = "Welcome!"
 	wait(0.5)
 
+	-- Fade out animation
 	local fadeTween = TweenService:Create(bg, TweenInfo.new(1), {BackgroundTransparency = 1})
 	local frameTween = TweenService:Create(loadingFrame, TweenInfo.new(1), {Position = UDim2.new(0.25, 0, 1.2, 0)})
 	local titleFade = TweenService:Create(title, TweenInfo.new(1), {TextTransparency = 1})
